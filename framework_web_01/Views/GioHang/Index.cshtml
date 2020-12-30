@@ -1,0 +1,99 @@
+﻿@model IEnumerable<framework_web_01.Models.GioHang>
+
+
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@if (Session["role"] == null)
+{
+    Response.Redirect("https://localhost:44321/TaiKhoan/DangNhap");
+}
+<h2 align="center">Thông tin giỏ hàng</h2>
+@using (Html.BeginForm("TinhLai", "GioHang", FormMethod.Post))
+{
+
+    <div class="container">
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:50%">Tên sản phẩm</th>
+                    <th style="width:10%">Giá</th>
+                    <th style="width:8%">Số lượng</th>
+                    <th style="width:22%" class="text-center">Thành tiền</th>
+                    <th style="width:10%"> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var tongtien = 0.0;
+                    if (Model != null)
+                    {
+                        var thanhtien = 0;
+                        foreach (var item in Model)
+                        {
+                            thanhtien = (int)item.SoLuong * (int)item.sanpham.gia;
+                            <tr>
+                                <td data-th="Product">
+                                    <div class="row">
+                                        <div class="col-sm-2 hidden-xs">
+                                            <img src="~/Content/images/@item.sanpham.hinhanh" alt="@item.sanpham.masp" title="@item.sanpham.masp" class="img-responsive" width="100">
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <h4 class="nomargin">@item.sanpham.tensp</h4>
+                                            <input type="hidden" name="id" id="id" value="@item.sanpham.masp" />
+                                            <p>@item.sanpham.mota</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-th="Price">@item.sanpham.gia đ</td>
+                                <td data-th="Quantity">
+                                    <input class="TextBoxDiem form-control" name="soluong" id="soluong" value="@item.SoLuong" min="0" type="number">
+                                </td>
+                                <td data-th="Subtotal" class="text-center">@thanhtien đ</td>
+                                <td class="actions" data-th="">
+                                    <button class="btn btn-info btn-sm">
+                                        <i class="fa fa-edit"><a href="https://localhost:44321/SanPham/Chitietsanpham/@item.sanpham.masp">CT</a></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            tongtien = tongtien + thanhtien;
+                            Session["tongtien"] = tongtien;
+                        }
+
+
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr class="visible-xs">
+                    <td class="text-center">
+                        <strong>Tổng 200.000 đ</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://localhost:44321/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
+                    </td>
+                    <td class="hidden-xs">
+                        <input type="submit" value="Tính lại" class="btn btn-default" />
+                    </td>
+                    <td class="hidden-xs">  </td>
+                    <td class="hidden-xs text-center">
+                        <strong>Tổng tiền @tongtien đ</strong>
+                    </td>
+                    <td>
+                        <a href="https://localhost:44321/GioHang/DiaChi" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+}
+

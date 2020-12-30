@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbforwebprojectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="cthd">
+    <Key>
+      <PropertyRef Name="macthd" />
+    </Key>
+    <Property Name="macthd" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="mahd" Type="Int32" />
+    <Property Name="masp" Type="Int32" />
+    <Property Name="soluong" Type="Int32" />
+    <Property Name="thanhtien" Type="Double" />
+    <NavigationProperty Name="hoadon" Relationship="Self.fk_cthd_hd" FromRole="cthd" ToRole="hoadon" />
+    <NavigationProperty Name="sanpham" Relationship="Self.fk_cthd_sp" FromRole="cthd" ToRole="sanpham" />
+  </EntityType>
+  <EntityType Name="hoadon">
+    <Key>
+      <PropertyRef Name="mahd" />
+    </Key>
+    <Property Name="mahd" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tendangnhap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="tien" Type="Double" />
+    <Property Name="sdt" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="diachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="hoten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="cthds" Relationship="Self.fk_cthd_hd" FromRole="hoadon" ToRole="cthd" />
+    <NavigationProperty Name="taikhoan" Relationship="Self.fk_dh_kh" FromRole="hoadon" ToRole="taikhoan" />
+  </EntityType>
+  <EntityType Name="sanpham">
+    <Key>
+      <PropertyRef Name="masp" />
+    </Key>
+    <Property Name="masp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="loai" Type="Int32" />
+    <Property Name="tensp" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="gia" Type="Double" />
+    <Property Name="hinhanh" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="mota" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="cthds" Relationship="Self.fk_cthd_sp" FromRole="sanpham" ToRole="cthd" />
+  </EntityType>
+  <EntityType Name="taikhoan">
+    <Key>
+      <PropertyRef Name="tendangnhap" />
+    </Key>
+    <Property Name="tendangnhap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="hoten" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="matkhau" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="sdt" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="diachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="role" Type="Int32" />
+    <NavigationProperty Name="hoadons" Relationship="Self.fk_dh_kh" FromRole="taikhoan" ToRole="hoadon" />
+  </EntityType>
+  <Association Name="fk_cthd_hd">
+    <End Role="hoadon" Type="Self.hoadon" Multiplicity="0..1" />
+    <End Role="cthd" Type="Self.cthd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hoadon">
+        <PropertyRef Name="mahd" />
+      </Principal>
+      <Dependent Role="cthd">
+        <PropertyRef Name="mahd" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_cthd_sp">
+    <End Role="sanpham" Type="Self.sanpham" Multiplicity="0..1" />
+    <End Role="cthd" Type="Self.cthd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sanpham">
+        <PropertyRef Name="masp" />
+      </Principal>
+      <Dependent Role="cthd">
+        <PropertyRef Name="masp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_dh_kh">
+    <End Role="taikhoan" Type="Self.taikhoan" Multiplicity="0..1" />
+    <End Role="hoadon" Type="Self.hoadon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="taikhoan">
+        <PropertyRef Name="tendangnhap" />
+      </Principal>
+      <Dependent Role="hoadon">
+        <PropertyRef Name="tendangnhap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbforwebprojectEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="cthds" EntityType="Self.cthd" />
+    <EntitySet Name="hoadons" EntityType="Self.hoadon" />
+    <EntitySet Name="sanphams" EntityType="Self.sanpham" />
+    <EntitySet Name="taikhoans" EntityType="Self.taikhoan" />
+    <AssociationSet Name="fk_cthd_hd" Association="Self.fk_cthd_hd">
+      <End Role="hoadon" EntitySet="hoadons" />
+      <End Role="cthd" EntitySet="cthds" />
+    </AssociationSet>
+    <AssociationSet Name="fk_cthd_sp" Association="Self.fk_cthd_sp">
+      <End Role="sanpham" EntitySet="sanphams" />
+      <End Role="cthd" EntitySet="cthds" />
+    </AssociationSet>
+    <AssociationSet Name="fk_dh_kh" Association="Self.fk_dh_kh">
+      <End Role="taikhoan" EntitySet="taikhoans" />
+      <End Role="hoadon" EntitySet="hoadons" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

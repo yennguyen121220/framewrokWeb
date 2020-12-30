@@ -1,0 +1,152 @@
+﻿@using framework_web_01.Models
+
+@{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+@using (Html.BeginForm("DatHang", "GioHang", FormMethod.Post))
+{
+
+    <section class="order-form my-4 mx-4" align="center">
+        <div class="container pt-4">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Xác Nhận Đặt Hàng</h1>
+                    <span>Thông tin người nhận</span>
+                    <hr class="mt-1">
+                </div>
+                <div class="col-12">
+
+                    <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                            <label class="order-form-label">Tên người nhận</label>
+                        </div>
+                        <div class="col-12">
+                            <input class="order-form-input" name="name" value="@ViewBag.dh.hoten" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                            <label class="order-form-label">Địa chỉ</label>
+                        </div>
+                        <div class="col-12">
+                            <input class="order-form-input" name="diachi" value="@ViewBag.dh.diachi" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                            <label class="order-form-label" for="date-picker-example">Số điện thoại</label>
+                        </div>
+                        <div class="col-12">
+                            <input class="order-form-input datepicker" name="sodt" value="@ViewBag.dh.sdt" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                            <label class="order-form-label" for="date-picker-example">Tiền cần thanh toán</label>
+                        </div>
+                        <div class="col-12">
+                            <input class="order-form-input datepicker" name="tien" value="@Session["tongtien"]" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="validation" id="validation" value="1" checked="checked" required>
+                                <label for="validation" class="form-check-label">Thanh toán khi nhận hàng</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <h2>Thông tin giỏ hàng</h2>
+    <div class="container">
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:50%">Tên sản phẩm</th>
+                    <th style="width:10%">Giá</th>
+                    <th style="width:8%">Số lượng</th>
+                    <th style="width:22%" class="text-center">Thành tiền</th>
+                    <th style="width:10%"> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var tongtien = 0.0;
+                    if (ViewBag.gh != null)
+                    {
+                        var thanhtien = 0;
+                        foreach (var item in ViewBag.gh)
+                        {
+                            thanhtien = (int)item.SoLuong * (int)item.sanpham.gia;
+                            <tr>
+                                <td data-th="Product">
+                                    <div class="row">
+                                        <div class="col-sm-2 hidden-xs">
+                                            <img src="~/Content/images/@item.sanpham.hinhanh" alt="@item.sanpham.masp" title="@item.sanpham.masp" class="img-responsive" width="100">
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <h4 class="nomargin">@item.sanpham.tensp</h4>
+                                            <input type="hidden" name="id" id="id" value="@item.sanpham.masp" />
+                                            <p>@item.sanpham.mota</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-th="Price">@item.sanpham.gia đ</td>
+                                <td data-th="Quantity">
+                                    <input class="TextBoxDiem form-control" name="soluong" id="soluong" value="@item.SoLuong" min="0" type="number" readonly>
+                                </td>
+                                <td data-th="Subtotal" class="text-center">@thanhtien đ</td>
+                                <td class="actions" data-th="">
+                                    <button class="btn btn-info btn-sm">
+                                        <i class="fa fa-edit">
+                                            <a href="https://localhost:44321/SanPham/Chitietsanpham/@item.sanpham.masp">CT</a>
+                                        </i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o"><a href="https://localhost:44321/"></a></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            tongtien = tongtien + thanhtien;
+                            Session["tongtien"] = tongtien;
+                        }
+
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr class="visible-xs">
+                    <td class="text-center">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://localhost:44321/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
+                    </td>
+                    <td class="hidden-xs">  </td>
+                    <td class="hidden-xs text-center">
+                        <strong>Tổng tiền @tongtien đ</strong>
+                    </td>
+                    <td>
+                        <input type="submit" value="Đặt hàng" class="btn btn-default" />
+
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+}

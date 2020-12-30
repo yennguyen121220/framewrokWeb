@@ -1,0 +1,36 @@
+﻿@*@model IList<framwork_01.Models.sanpham>*@
+@model IEnumerable<framework_web_01.Models.sanpham>
+
+
+@{
+    ViewBag.Title = "Quan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class='name'>
+    <h3>Quần</h3>
+</div>
+<div class="sanpham">
+    @*@Html.Raw(ViewBag.View)*@
+    @{
+        foreach (var item in Model)
+        {
+            <ul>
+                <li>
+                    <img src="/Content/images/@item.hinhanh" />
+                    <div id="thongtin">
+                        <label>@item.tensp<br><em> thời trang thu đông </em></label>
+                        <p> Giá: <span id="gia">@item.gia</span></p>
+                        <form>
+                            @Html.ActionLink("Chi tiết", "Chitietsanpham", "SanPham", new { id = item.masp }, new { @class = "chonmua" })
+                            @Html.ActionLink("Đặt Mua", "ThemGioHang", "GioHang", new { id = item.masp }, new { @class = "chonmua" })
+                        </form>
+                    </div>
+                </li>
+            </ul>
+
+        }
+    }
+</div>
+

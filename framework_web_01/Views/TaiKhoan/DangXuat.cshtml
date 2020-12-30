@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "DangXuat";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@if (Session["role"] == null)
+{
+    Response.Redirect("https://localhost:44321/TaiKhoan/DangNhap");
+}
+

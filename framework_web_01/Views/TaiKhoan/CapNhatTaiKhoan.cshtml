@@ -1,0 +1,69 @@
+﻿@model framework_web_01.Models.taikhoan
+
+@{
+    ViewBag.Title = "CapNhatTaiKhoan";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="main__form-wrap-1" align="center">
+        <div class="main_form-container">
+            <h4>Cập nhật thông tin</h4>
+            <div class="input__group">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.tendangnhap)
+            </div>
+
+            <div class="input__group">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.role)
+            </div>
+            <div class="input__group">
+
+                @Html.LabelFor(model => model.hoten, htmlAttributes: new { })
+                @Html.EditorFor(model => model.hoten, new { htmlAttributes = new { } })
+                @Html.ValidationMessageFor(model => model.hoten, "", new { })
+            </div>
+            <div class="input__group">
+
+                @Html.LabelFor(model => model.matkhau, htmlAttributes: new { })
+                @Html.EditorFor(model => model.matkhau, new { htmlAttributes = new { } })
+                @Html.ValidationMessageFor(model => model.matkhau, "", new { })
+            </div>
+            <div class="input__group">
+
+                @Html.LabelFor(model => model.sdt, htmlAttributes: new { })
+                @Html.EditorFor(model => model.sdt, new { htmlAttributes = new { } })
+                @Html.ValidationMessageFor(model => model.sdt, "", new { })
+            </div>
+
+
+            <div class="input__group">
+
+                @Html.LabelFor(model => model.diachi, htmlAttributes: new { })
+                @Html.EditorFor(model => model.diachi, new { htmlAttributes = new { } })
+                @Html.ValidationMessageFor(model => model.diachi, "", new { })
+            </div>
+
+
+
+            <div class="input__group-submit-btn">
+                <table class="tbl">
+                    <tr>
+                        <td>
+                            <a class="cn" href="https://localhost:44321/">Về trang chủ</a>
+                        </td>
+                        <td>
+                            <input type="submit" value="Lưu" class="btn btn-default" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+}

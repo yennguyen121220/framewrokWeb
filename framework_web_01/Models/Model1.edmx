@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbforwebprojectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cthd">
+          <Key>
+            <PropertyRef Name="macthd" />
+          </Key>
+          <Property Name="macthd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mahd" Type="int" />
+          <Property Name="masp" Type="int" />
+          <Property Name="soluong" Type="int" />
+          <Property Name="thanhtien" Type="float" />
+        </EntityType>
+        <EntityType Name="hoadon">
+          <Key>
+            <PropertyRef Name="mahd" />
+          </Key>
+          <Property Name="mahd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tendangnhap" Type="varchar" MaxLength="50" />
+          <Property Name="tien" Type="float" />
+          <Property Name="sdt" Type="varchar" MaxLength="11" />
+          <Property Name="diachi" Type="nvarchar" MaxLength="100" />
+          <Property Name="hoten" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sanpham">
+          <Key>
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="masp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="loai" Type="int" />
+          <Property Name="tensp" Type="nvarchar" MaxLength="40" />
+          <Property Name="gia" Type="float" />
+          <Property Name="hinhanh" Type="nvarchar" MaxLength="40" />
+          <Property Name="mota" Type="text" />
+        </EntityType>
+        <EntityType Name="taikhoan">
+          <Key>
+            <PropertyRef Name="tendangnhap" />
+          </Key>
+          <Property Name="tendangnhap" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="hoten" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="matkhau" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="sdt" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="diachi" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="role" Type="int" />
+        </EntityType>
+        <Association Name="fk_cthd_hd">
+          <End Role="hoadon" Type="Self.hoadon" Multiplicity="0..1" />
+          <End Role="cthd" Type="Self.cthd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hoadon">
+              <PropertyRef Name="mahd" />
+            </Principal>
+            <Dependent Role="cthd">
+              <PropertyRef Name="mahd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dh_kh">
+          <End Role="taikhoan" Type="Self.taikhoan" Multiplicity="0..1" />
+          <End Role="hoadon" Type="Self.hoadon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taikhoan">
+              <PropertyRef Name="tendangnhap" />
+            </Principal>
+            <Dependent Role="hoadon">
+              <PropertyRef Name="tendangnhap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbforwebprojectModelStoreContainer">
+          <EntitySet Name="cthd" EntityType="Self.cthd" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hoadon" EntityType="Self.hoadon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sanpham" EntityType="Self.sanpham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="taikhoan" EntityType="Self.taikhoan" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_cthd_hd" Association="Self.fk_cthd_hd">
+            <End Role="hoadon" EntitySet="hoadon" />
+            <End Role="cthd" EntitySet="cthd" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dh_kh" Association="Self.fk_dh_kh">
+            <End Role="taikhoan" EntitySet="taikhoan" />
+            <End Role="hoadon" EntitySet="hoadon" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbforwebprojectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cthd">
+          <Key>
+            <PropertyRef Name="macthd" />
+          </Key>
+          <Property Name="macthd" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mahd" Type="Int32" />
+          <Property Name="masp" Type="Int32" />
+          <Property Name="soluong" Type="Int32" />
+          <Property Name="thanhtien" Type="Double" />
+          <NavigationProperty Name="hoadon" Relationship="Self.fk_cthd_hd" FromRole="cthd" ToRole="hoadon" />
+          <NavigationProperty Name="sanpham" Relationship="Self.fk_cthd_sp" FromRole="cthd" ToRole="sanpham" />
+        </EntityType>
+        <EntityType Name="hoadon">
+          <Key>
+            <PropertyRef Name="mahd" />
+          </Key>
+          <Property Name="mahd" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tendangnhap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tien" Type="Double" />
+          <Property Name="sdt" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="diachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="hoten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cthds" Relationship="Self.fk_cthd_hd" FromRole="hoadon" ToRole="cthd" />
+          <NavigationProperty Name="taikhoan" Relationship="Self.fk_dh_kh" FromRole="hoadon" ToRole="taikhoan" />
+        </EntityType>
+        <EntityType Name="sanpham">
+          <Key>
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="masp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="loai" Type="Int32" />
+          <Property Name="tensp" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="gia" Type="Double" />
+          <Property Name="hinhanh" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="mota" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cthds" Relationship="Self.fk_cthd_sp" FromRole="sanpham" ToRole="cthd" />
+        </EntityType>
+        <EntityType Name="taikhoan">
+          <Key>
+            <PropertyRef Name="tendangnhap" />
+          </Key>
+          <Property Name="tendangnhap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hoten" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="matkhau" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sdt" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="diachi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="role" Type="Int32" />
+          <NavigationProperty Name="hoadons" Relationship="Self.fk_dh_kh" FromRole="taikhoan" ToRole="hoadon" />
+        </EntityType>
+        <Association Name="fk_cthd_hd">
+          <End Role="hoadon" Type="Self.hoadon" Multiplicity="0..1" />
+          <End Role="cthd" Type="Self.cthd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hoadon">
+              <PropertyRef Name="mahd" />
+            </Principal>
+            <Dependent Role="cthd">
+              <PropertyRef Name="mahd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cthd_sp">
+          <End Role="sanpham" Type="Self.sanpham" Multiplicity="0..1" />
+          <End Role="cthd" Type="Self.cthd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sanpham">
+              <PropertyRef Name="masp" />
+            </Principal>
+            <Dependent Role="cthd">
+              <PropertyRef Name="masp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dh_kh">
+          <End Role="taikhoan" Type="Self.taikhoan" Multiplicity="0..1" />
+          <End Role="hoadon" Type="Self.hoadon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taikhoan">
+              <PropertyRef Name="tendangnhap" />
+            </Principal>
+            <Dependent Role="hoadon">
+              <PropertyRef Name="tendangnhap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbforwebprojectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cthds" EntityType="Self.cthd" />
+          <EntitySet Name="hoadons" EntityType="Self.hoadon" />
+          <EntitySet Name="sanphams" EntityType="Self.sanpham" />
+          <EntitySet Name="taikhoans" EntityType="Self.taikhoan" />
+          <AssociationSet Name="fk_cthd_hd" Association="Self.fk_cthd_hd">
+            <End Role="hoadon" EntitySet="hoadons" />
+            <End Role="cthd" EntitySet="cthds" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cthd_sp" Association="Self.fk_cthd_sp">
+            <End Role="sanpham" EntitySet="sanphams" />
+            <End Role="cthd" EntitySet="cthds" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dh_kh" Association="Self.fk_dh_kh">
+            <End Role="taikhoan" EntitySet="taikhoans" />
+            <End Role="hoadon" EntitySet="hoadons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbforwebprojectModelStoreContainer" CdmEntityContainer="dbforwebprojectEntities">
+          <EntitySetMapping Name="cthds">
+            <EntityTypeMapping TypeName="dbforwebprojectModel.cthd">
+              <MappingFragment StoreEntitySet="cthd">
+                <ScalarProperty Name="macthd" ColumnName="macthd" />
+                <ScalarProperty Name="mahd" ColumnName="mahd" />
+                <ScalarProperty Name="masp" ColumnName="masp" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+                <ScalarProperty Name="thanhtien" ColumnName="thanhtien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hoadons">
+            <EntityTypeMapping TypeName="dbforwebprojectModel.hoadon">
+              <MappingFragment StoreEntitySet="hoadon">
+                <ScalarProperty Name="mahd" ColumnName="mahd" />
+                <ScalarProperty Name="tendangnhap" ColumnName="tendangnhap" />
+                <ScalarProperty Name="tien" ColumnName="tien" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sanphams">
+            <EntityTypeMapping TypeName="dbforwebprojectModel.sanpham">
+              <MappingFragment StoreEntitySet="sanpham">
+                <ScalarProperty Name="masp" ColumnName="masp" />
+                <ScalarProperty Name="loai" ColumnName="loai" />
+                <ScalarProperty Name="tensp" ColumnName="tensp" />
+                <ScalarProperty Name="gia" ColumnName="gia" />
+                <ScalarProperty Name="hinhanh" ColumnName="hinhanh" />
+                <ScalarProperty Name="mota" ColumnName="mota" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="taikhoans">
+            <EntityTypeMapping TypeName="dbforwebprojectModel.taikhoan">
+              <MappingFragment StoreEntitySet="taikhoan">
+                <ScalarProperty Name="tendangnhap" ColumnName="tendangnhap" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+                <ScalarProperty Name="matkhau" ColumnName="matkhau" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

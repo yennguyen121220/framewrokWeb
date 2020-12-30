@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title - Jolie Clothing</title>
+    <link href="~/Content/fontawesome-free-5.14.0/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/LayoutCSS.css" rel="stylesheet" />
+
+   
+</head>
+
+<body>
+    <div id="content">
+        <div id="menu_top">
+            <!--mo menutop-->
+            <div id="logo">
+                <a href="https://localhost:44321/"><img src="~/Content/images/logohome1.PNG" alt="LogoJolie" /></a>
+            </div>
+            <div id="top_left">
+                <form method="POST" runat="server" action="https://localhost:44321/SanPham/TimKiem">
+                    <div id="find">
+                        <input type="text" id="search_name" name="search_name"  placeholder="nhập sản phẩm cần tìm"  />
+                        <a id="btnFind" name="timkiem">Tìm kiếm</a>
+                    </div>
+                </form>
+                <div id="qoute">
+                    <h2>Yêu bản thân, may mắn tự nhiên tới</h2>
+                </div>
+            </div>
+            <div id="top_right">
+                <div id="right_top">
+                    <div id="right">
+                        <ul>
+                            <li>@Html.ActionLink("Đăng ký", "DangKy", "TaiKhoan")</li>
+                            @if (Session["role"] != null)
+                            {
+                                <li>@Html.ActionLink("Đăng xuất", "DangXuat", "TaiKhoan")</li>
+
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink("Đăng nhập", "DangNhap", "TaiKhoan")</li>
+                            }
+
+                        </ul>
+                    </div>
+
+                    <div id="left">
+                        <h3><a href="@Url.Action("Index","GioHang")">Giỏ hàng</a></h3>
+
+                        @*</a></h3>
+                            <h3><a href="#">Giỏ hàng</a></h3>*@
+                    </div>
+                </div>
+                <div id="right_bottom"><h2><a href="#">Contact us</a></h2></div>
+            </div>
+            <div id="danhmuc">
+                <nav class="nav-main">
+                    <ul>
+                        <li>@Html.ActionLink("Túi", "Tui", "Home")</li>
+                        <li>@Html.ActionLink("Giày, dép", "Giay", "Home")</li>
+                        <li>@Html.ActionLink("Áo", "Ao", "Home")</li>
+                        <li>@Html.ActionLink("Quần", "Quan", "Home")</li>
+                        <li>@Html.ActionLink("Yếm", "Yem", "Home")</li>
+                        <li>@Html.ActionLink("Chân váy", "ChanVay", "Home")</li>
+                        <li>@Html.ActionLink("Váy", "Vay", "Home")</li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="duongdan">
+                <nav class="dd">
+                    <ul>
+                        <li><a>Chào @Session["tendangnhap"] (^-^)</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div> <!--dong menutop-->
+        <div id="main">
+            <!--mo main--->
+
+            <div id="menu_left">
+                <div class="main_menu">
+                    <h3>Danh mục sản phẩm</h3>
+                    <ul>
+                        <li>@Html.ActionLink("Túi", "Tui", "Home")</li>
+                        <li>@Html.ActionLink("Giày, dép", "Giay", "Home")</li>
+                        <li>@Html.ActionLink("Áo", "Ao", "Home")</li>
+                        <li>@Html.ActionLink("Quần", "Quan", "Home")</li>
+                        <li>@Html.ActionLink("Yếm", "Yem", "Home")</li>
+                        <li>@Html.ActionLink("Chân váy", "ChanVay", "Home")</li>
+                        <li>@Html.ActionLink("Váy", "Vay", "Home")</li>
+                        
+                        @if(Session["role"] != null)
+                        {
+                            <li>
+                                <a>Quản lý</a>
+                                <ul class="submenu">
+                                    <li>@Html.ActionLink("Tài khoản cá nhân", "QuanLyTaiKhoan", "TaiKhoan")</li>
+                                    @if ((int)Session["role"] == 1)
+                                    {
+                                        <li>@Html.ActionLink("Thêm sản phẩm", "ThemSP", "SanPham")</li>
+                                        <li>@Html.ActionLink("Danh sách tài khoản", "DanhSachTK","TaiKhoan")</li>
+                                        <li>@Html.ActionLink("Danh sách hóa đơn","Index","HoaDon")</li>
+                                    }
+                                </ul>
+                                
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+
+            <div id="hotdeals">
+                <!--<?php
+                require_once "./MVC/views/pages/".$data["Page"].".php";
+                ?>-->
+                @RenderBody()
+            </div><!--dong sanpham-->
+        </div><!--dong -main-->
+        <footer>
+            <div class="footer-wrap">
+                <div class="footer-wrap-info">
+                    <div class="footer__shopInfo-aboutus">
+                        <h4 class="footer__shopInfo-aboutus-heading">Về chúng tôi</h4>
+                        <ul class="footer__shopInfo-link-list">
+                            <li class="footer__shopInfo-link-item">
+                                <a href="#" class="footer__shopInfo-link">Shop chúng tôi</a>
+                            </li>
+                            <li class="footer__shopInfo-link-item">
+                                <a href="#" class="footer__shopInfo-link">Báo cáo thường niên</a>
+                            </li>
+                            <li class="footer__shopInfo-link-item">
+                                <a href="#" class="footer__shopInfo-link">Cơ hội việc làm</a>
+                            </li>
+                            <li class="footer__shopInfo-link-item">
+                                <a href="#" class="footer__shopInfo-link">Chính sách cộng đồng</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="footer__contact-container">
+                        <h4 class="footer__shopInfo-aboutus-heading">Liên lạc với chúng tôi</h4>
+                        <p>Số điện thoại: <span>+84378233356</span></p>
+                        <p>Hoặc</p>
+                        <div class="footer__contact-icon-container">
+                            <div class="footer__contact-icon">
+                                <a href="#" class="footer__contact-icon-link">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                            </div>
+                            <div class="footer__contact-icon">
+                                <a href="#" class="footer__contact-icon-link">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                            <div class="footer__contact-icon">
+                                <a href="#" class="footer__contact-icon-link">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </div>
+                            <div class="footer__contact-icon">
+                                <a href="#" class="footer__contact-icon-link">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer__address-container">
+                        <h4 class="footer__shopInfo-aboutus-heading">Địa chỉ của chúng tôi</h4>
+                        <p>
+                            Quận 1, Thành phố Hồ Chí Minh
+                        </p>
+                    </div>
+                </div>
+
+                <div class="footer-wrap-copyright">
+                    <p>
+                        Bản quyền © thuộc về Jolie Clothing Shop
+                    </p>
+
+                    <div class="footer-wrap-copyright-link-container">
+                        <a href="#" class="footer-wrap-copyright-link">Contact</a>
+                        <a href="" class="footer-wrap-copyright-link">Terms of Use</a>
+                        <a href="" class="footer-wrap-copyright-link">Privacy</a>
+                        <a href="" class="footer-wrap-copyright-link">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+</body>
+</html>

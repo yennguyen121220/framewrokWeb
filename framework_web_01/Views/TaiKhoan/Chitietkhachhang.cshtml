@@ -1,0 +1,77 @@
+﻿
+@model framework_web_01.Models.taikhoan
+@using framework_web_01.Models
+
+@{
+    ViewBag.Title = "Chitietkhachhang";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@using (Html.BeginForm("Chitietkhachhang", "TaiKhoan", FormMethod.Post))
+{
+    <div class="main__form-wrap" align="center">
+        <h1 class="main__form-heading">Thông tin tài khoản</h1>
+        <div class="main_form-container">
+
+            @{
+                if (ViewBag.sqlq != null)
+                {
+                    foreach (taikhoan item in ViewBag.sqlq)
+                    {
+                        <div class="data_right">
+                            <table>
+                                <tr>
+                                    <th><h1>Tên đăng nhập</h1></th>
+                                    <td><h3>@item.tendangnhap</h3></td>
+                                </tr>
+                                <tr>
+                                    <th><h1>Họ tên</h1></th>
+                                    <td><h3>@item.hoten</h3></td>
+                                </tr>
+                                <tr>
+                                    <th><h1>Mật khẩu</h1></th>
+                                    <td><h3>@item.matkhau</h3></td>
+                                    @*<td><h3 name="masp">@item.masp</h3></td>*@
+                                </tr>
+                                <tr>
+                                    <th><h1>Số điện thoại</h1></th>
+                                    <td><h3>@item.sdt</h3></td>
+                                </tr>
+                                <tr>
+                                    <th><h1>Địa chỉ</h1></th>
+                                    <td><h3>@item.diachi</h3></td>
+                                </tr>
+                            </table>
+
+                            <div class="input__group-submit-btn">
+                                @*<input type="number" name="soluong" value="1" min="1" id="soluong" />*@
+                                <table class="tbl">
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink("Cập nhật thông tin", "CapNhatTaiKhoan", "TaiKhoan", new { tendangnhap = item.tendangnhap }, new { @class = "cn" })
+                                        </td>
+                                        <td>
+                                            <a class="cn" href="https://localhost:44321/">Về trang chủ  </a>
+                                        </td>
+                                        <td>
+                                            <input type="submit" value="Xóa" class="btn btn-default" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="img--error">
+                        <img src="~/Content/images/404error.png" />
+                    </p>
+                    <h1>Tài khoản đã không còn tồn tại</h1>
+                }
+            }
+
+
+        </div>
+    </div>
+}

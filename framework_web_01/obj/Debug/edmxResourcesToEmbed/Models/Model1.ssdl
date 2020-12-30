@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbforwebprojectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="cthd">
+    <Key>
+      <PropertyRef Name="macthd" />
+    </Key>
+    <Property Name="macthd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mahd" Type="int" />
+    <Property Name="masp" Type="int" />
+    <Property Name="soluong" Type="int" />
+    <Property Name="thanhtien" Type="float" />
+  </EntityType>
+  <EntityType Name="hoadon">
+    <Key>
+      <PropertyRef Name="mahd" />
+    </Key>
+    <Property Name="mahd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tendangnhap" Type="varchar" MaxLength="50" />
+    <Property Name="tien" Type="float" />
+    <Property Name="sdt" Type="varchar" MaxLength="11" />
+    <Property Name="diachi" Type="nvarchar" MaxLength="100" />
+    <Property Name="hoten" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="sanpham">
+    <Key>
+      <PropertyRef Name="masp" />
+    </Key>
+    <Property Name="masp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="loai" Type="int" />
+    <Property Name="tensp" Type="nvarchar" MaxLength="40" />
+    <Property Name="gia" Type="float" />
+    <Property Name="hinhanh" Type="nvarchar" MaxLength="40" />
+    <Property Name="mota" Type="text" />
+  </EntityType>
+  <EntityType Name="taikhoan">
+    <Key>
+      <PropertyRef Name="tendangnhap" />
+    </Key>
+    <Property Name="tendangnhap" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="hoten" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="matkhau" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="sdt" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="diachi" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="role" Type="int" />
+  </EntityType>
+  <Association Name="fk_cthd_hd">
+    <End Role="hoadon" Type="Self.hoadon" Multiplicity="0..1" />
+    <End Role="cthd" Type="Self.cthd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hoadon">
+        <PropertyRef Name="mahd" />
+      </Principal>
+      <Dependent Role="cthd">
+        <PropertyRef Name="mahd" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_dh_kh">
+    <End Role="taikhoan" Type="Self.taikhoan" Multiplicity="0..1" />
+    <End Role="hoadon" Type="Self.hoadon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="taikhoan">
+        <PropertyRef Name="tendangnhap" />
+      </Principal>
+      <Dependent Role="hoadon">
+        <PropertyRef Name="tendangnhap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbforwebprojectModelStoreContainer">
+    <EntitySet Name="cthd" EntityType="Self.cthd" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="hoadon" EntityType="Self.hoadon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sanpham" EntityType="Self.sanpham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="taikhoan" EntityType="Self.taikhoan" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_cthd_hd" Association="Self.fk_cthd_hd">
+      <End Role="hoadon" EntitySet="hoadon" />
+      <End Role="cthd" EntitySet="cthd" />
+    </AssociationSet>
+    <AssociationSet Name="fk_dh_kh" Association="Self.fk_dh_kh">
+      <End Role="taikhoan" EntitySet="taikhoan" />
+      <End Role="hoadon" EntitySet="hoadon" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
