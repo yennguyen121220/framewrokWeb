@@ -14,9 +14,26 @@ namespace framework_web_01.Controllers
         // GET: HoaDon
         public ActionResult Index()
         {
-            ViewBag.Title = "Index";
-            var hd = (from p in DB.hoadons select p).ToList();
-            return View(hd);
+            if (Session["tendangnhap"] != null)
+            {
+                ViewBag.Title = "Index";
+                if (Convert.ToInt32(Session["role"]) == 1)
+                {
+                    var hd = (from p in DB.hoadons select p).ToList();
+                    return View(hd);
+                }
+                else
+                {
+                    string tendangnhap=Convert.ToString(Session["tendangnhap"]);
+                    var hd = (from p in DB.hoadons where p.tendangnhap==tendangnhap  select p).ToList();
+                    return View(hd);
+                }
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         public ActionResult chitiethoadon(int mahd)

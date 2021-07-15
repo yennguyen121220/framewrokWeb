@@ -53,11 +53,19 @@ namespace framework_web_01.Controllers
         //xem chi tiết sản phầm + xóa
         public ActionResult Chitietsanpham(int id)
         {
-            var chitiet = DB.sanphams.Where(s => s.masp == id).ToList().FirstOrDefault();
-            var splq = DB.sanphams.Where(s => s.masp == chitiet.masp).ToList().Take(1);
-            ViewBag.sqlq = splq;
-            Session["masp"] = id;
-            return View(chitiet);
+            var kt = DB.sanphams.Where(s => s.masp == id).Count();//kiem tra taikhoan co ton tai trong database hay k
+            if (Convert.ToInt32(kt) > 0)
+            {
+                var chitiet = DB.sanphams.Where(s => s.masp == id).ToList().FirstOrDefault();
+                var splq = DB.sanphams.Where(s => s.masp == chitiet.masp).ToList().Take(1);
+                ViewBag.sqlq = splq;
+                Session["masp"] = id;
+                return View(chitiet);
+            }
+            else
+            {
+                return View();
+            }
         }
         [HttpPost]
         public ActionResult Chitietsanpham(FormCollection collection) //xoa

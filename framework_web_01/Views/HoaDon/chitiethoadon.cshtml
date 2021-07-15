@@ -45,8 +45,7 @@
                             <td class="actions" data-th="">
                                 <button class="btn btn-info btn-sm">
 
-                                    @*<i class="fa fa-edit">@Html.ActionLink("CT", "Chitietkhachhang", "TaiKhoan", new { tendangnhap = item.tendangnhap }, new { @class = "chonmua" })</i>
-                                        @Html.ActionLink("Chi tiết", "chitiethoadon", "HoaDon", new { mahd = item.mahd }, new { @class = "chonmua" })*@
+                                    <i class="fa fa-edit">@Html.ActionLink("CT", "Chitietsanpham", "SanPham", new { id = item.masp }, new { @class = "chonmua" })</i>
 
                                 </button>
                             </td>
@@ -62,7 +61,7 @@
             </tr>
             <tr>
                 <td>
-                    <a href="https://localhost:44321/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Trang chủ</a>
+                    <a href="https://localhost:44321/HoaDon" class="btn btn-warning"><i class="fa fa-angle-left"></i> Quay lại</a>
                 </td>
                 <td class="hidden-xs">  </td>
                 <td class="hidden-xs">  </td>

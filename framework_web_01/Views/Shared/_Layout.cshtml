@@ -96,11 +96,15 @@
                                 <a>Quản lý</a>
                                 <ul class="submenu">
                                     <li>@Html.ActionLink("Tài khoản cá nhân", "QuanLyTaiKhoan", "TaiKhoan")</li>
+                                    @if ((int)Session["role"] == 0)
+                                    {
+                                        <li>@Html.ActionLink("Danh sách hóa đơn", "Index", "HoaDon")</li>
+                                    }
                                     @if ((int)Session["role"] == 1)
                                     {
                                         <li>@Html.ActionLink("Thêm sản phẩm", "ThemSP", "SanPham")</li>
-                                        <li>@Html.ActionLink("Danh sách tài khoản", "DanhSachTK","TaiKhoan")</li>
-                                        <li>@Html.ActionLink("Danh sách hóa đơn","Index","HoaDon")</li>
+                                        <li>@Html.ActionLink("Danh sách tài khoản", "DanhSachTK", "TaiKhoan")</li>
+                                        <li>@Html.ActionLink("Danh sách hóa đơn", "Index", "HoaDon")</li>
                                     }
                                 </ul>
                                 

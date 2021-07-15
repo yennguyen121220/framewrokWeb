@@ -14,66 +14,76 @@
         <div class="main_form-container">
 
             @{
-                foreach (sanpham item in ViewBag.sqlq)
+                if (ViewBag.sqlq != null)
                 {
-                    <div class="data_left">
-                        <img src="~/Content/images/@item.hinhanh" alt="hinh anh" />
-                    </div>
-                    <div class="data_right">
-                        <table>
-                            <tr>
-                                <th><h1>Tên sản phẩm</h1></th>
-                                <td><input type="text" value="@item.tensp" readonly /></td>
-                            </tr>
-                            <tr>
-                                <th><h1>Giá sản phẩm</h1></th>
-                                <td><h3>@item.gia</h3></td>
-                            </tr>
-                            <tr>
-                                <th><h1>Mã sản phẩm</h1></th>
-
-                                <td><input type="text" value="@item.masp" name="masp" readonly /></td>
-                                @*<td><h3 name="masp">@item.masp</h3></td>*@
-                            </tr>
-                            <tr>
-                                <th><h1>Mã loại sản phẩm</h1></th>
-                                <td><h3>@item.loai</h3></td>
-                            </tr>
-                            <tr>
-                                <th><h1>Mô tả</h1></th>
-                                <td><h3>@item.mota</h3></td>
-                            </tr>
-                        </table>
-
-                        <div class="input__group-submit-btn">
-                            @*<input type="number" name="soluong" value="1" min="1" id="soluong" />*@
-                            <table class="tbl">
+                    foreach (sanpham item in ViewBag.sqlq)
+                    {
+                        <div class="data_left">
+                            <img src="~/Content/images/@item.hinhanh" alt="hinh anh" />
+                        </div>
+                        <div class="data_right">
+                            <table>
                                 <tr>
-                                    <td>
-                                        @Html.ActionLink("Đặt Mua", "ThemGioHang", "GioHang", new { id = Model.masp }, new { @class = "cn", @role = "button", @id = "Find" })
-                                    </td>
-                                    <td>
-                                        <a class="cn" href="/GioHang/Index">Giỏ Hàng</a>
-                                    </td>
+                                    <th><h1>Tên sản phẩm</h1></th>
+                                    <td><input type="text" value="@item.tensp" readonly /></td>
+                                </tr>
+                                <tr>
+                                    <th><h1>Giá sản phẩm</h1></th>
+                                    <td><h3>@item.gia</h3></td>
+                                </tr>
+                                <tr>
+                                    <th><h1>Mã sản phẩm</h1></th>
 
-                                    <td>
-                                        <a class="cn" href="https://localhost:44321/">Về trang chủ</a>
-                                    </td>
-
-                                    @if (Session["role"] != null && ((int)Session["role"]) == 1)
-                                    {
-                                        <td>
-                                            <a class="cn" href="/SanPham/SuaSP">Sửa</a>
-                                        </td>
-                                        <td>
-                                            <input type="submit" value="Xóa" class="btn btn-default" />
-                                        </td>
-                                    }
+                                    <td><input type="text" value="@item.masp" name="masp" readonly /></td>
+                                    @*<td><h3 name="masp">@item.masp</h3></td>*@
+                                </tr>
+                                <tr>
+                                    <th><h1>Mã loại sản phẩm</h1></th>
+                                    <td><h3>@item.loai</h3></td>
+                                </tr>
+                                <tr>
+                                    <th><h1>Mô tả</h1></th>
+                                    <td><h3>@item.mota</h3></td>
                                 </tr>
                             </table>
-                        </div>
-                    </div>
 
+                            <div class="input__group-submit-btn">
+                                @*<input type="number" name="soluong" value="1" min="1" id="soluong" />*@
+                                <table class="tbl">
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink("Đặt Mua", "ThemGioHang", "GioHang", new { id = Model.masp }, new { @class = "cn", @role = "button", @id = "Find" })
+                                        </td>
+                                        <td>
+                                            <a class="cn" href="/GioHang/Index">Giỏ Hàng</a>
+                                        </td>
+
+                                        <td>
+                                            <a class="cn" href="https://localhost:44321/">Về trang chủ</a>
+                                        </td>
+
+                                        @if (Session["role"] != null && ((int)Session["role"]) == 1)
+                                        {
+                                            <td>
+                                                <a class="cn" href="/SanPham/SuaSP">Sửa</a>
+                                            </td>
+                                            <td>
+                                                <input type="submit" value="Xóa" class="btn btn-default" />
+                                            </td>
+                                        }
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    }
+                }
+                else
+                {
+                    <p class="img--error">
+                        <img src="~/Content/images/404error.png" />
+                    </p>
+                    <h1>Sản phẩm đã không còn tồn tại</h1>
                 }
             }
         </div>
